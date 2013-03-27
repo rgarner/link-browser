@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Link Browser Popup</title>
+    <style>
+      body {
+        min-width: 357px;
+        overflow-x: hidden;
+        font-family: "Helvetica Neue", Verdana;
+      }
+
+      img {
+        margin: 5px;
+        border: 2px solid black;
+        vertical-align: middle;
+        width: 75px;
+        height: 75px;
+      }
+
+      h1 {
+        font-size: 1.2em;
+      }
+
+      #links {
+        font-size: 0.8em;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+     -->
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <h1>&lt;link&gt; tags in this document</h1>
+    <ul id="links">
+
+    </ul>
+  </body>
+</html>
+
