@@ -5,18 +5,18 @@
   "description": "Shows <link> tags as a browseable dropdown",
   "version": "1.0",
   "icons": {
-    "16": "icon-16.png",    
-    "48": "icon-48.png",    
-    "128": "icon-128.png"    
+    "16": "img/icon-16.png",    
+    "48": "img/icon-48.png",    
+    "128": "img/icon-128.png"    
   },
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "img/icon.png",
+    "default_popup": "html/popup.html"
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["link-reader.js"]
+      "js": ["js/link-reader.js"]
     }
   ]
 }
