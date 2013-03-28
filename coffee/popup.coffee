@@ -6,7 +6,8 @@ $b = DOMBrew
 
 class LinkEnumerator
   @addLink: (root, linkTag) ->
-    $b(root).append($b('tr')
+    _class = if linkTag.rel == 'alternate' then 'alternate' else null
+    $b(root).append($b('tr', class: _class)
       .append($b('td', linkTag.rel))
       .append($b('td')
         .append($b('a', href: linkTag.href, title: linkTag.href, text: linkTag.href )))
@@ -21,6 +22,11 @@ class LinkEnumerator
         unless linkTags?
           td = $b(root).append($b('tr').append($b('td', 'No link tags found.')))
           return
+
+        linkTags.sort (a, b) ->
+          return 0 if a.rel == b.rel
+          return -1 if a.rel == 'alternate'
+          if a.rel >= b.rel then 1 else -1
 
         LinkEnumerator.addLink root, linkTag for linkTag in linkTags
 

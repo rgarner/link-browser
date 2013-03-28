@@ -9,7 +9,11 @@
     function LinkEnumerator() {}
 
     LinkEnumerator.addLink = function(root, linkTag) {
-      return $b(root).append($b('tr').append($b('td', linkTag.rel)).append($b('td').append($b('a', {
+      var _class;
+      _class = linkTag.rel === 'alternate' ? 'alternate' : null;
+      return $b(root).append($b('tr', {
+        "class": _class
+      }).append($b('td', linkTag.rel)).append($b('td').append($b('a', {
         href: linkTag.href,
         title: linkTag.href,
         text: linkTag.href
@@ -30,6 +34,19 @@
             td = $b(root).append($b('tr').append($b('td', 'No link tags found.')));
             return;
           }
+          linkTags.sort(function(a, b) {
+            if (a.rel === b.rel) {
+              return 0;
+            }
+            if (a.rel === 'alternate') {
+              return -1;
+            }
+            if (a.rel >= b.rel) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
           _results = [];
           for (_i = 0, _len = linkTags.length; _i < _len; _i++) {
             linkTag = linkTags[_i];
