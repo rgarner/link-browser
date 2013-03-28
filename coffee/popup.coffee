@@ -2,17 +2,20 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-$b = DOMBrew
-
 class LinkEnumerator
+  @newTab: (href) ->
+    chrome.tabs.create(url: href)
+
   @addLink: (root, linkTag) ->
-    _class = if linkTag.rel == 'alternate' then 'alternate' else null
-    $b(root).append($b('tr', class: _class)
-      .append($b('td', linkTag.rel))
-      .append($b('td')
-        .append($b('a', href: linkTag.href, title: linkTag.href, text: linkTag.href )))
-      .append($b('td',  class: 'type', text: linkTag.type))
-      .append($b('td',  linkTag.media)))
+    _class = if linkTag.rel == 'alternate' then 'class="alternate"' else null
+    $('#links').append("""
+        <tr>
+          <td #{_class}>#{linkTag.rel}</td>
+          <td><a href="#{linkTag.href}" title="#{linkTag.title}">#{linkTag.href}</a></td>
+          <td>#{linkTag.type}</td>
+          <td>#{linkTag.media}</td>
+        </tr>
+      """)
 
   @addListOfLinks: ->
     chrome.tabs.getSelected null, (tab) ->
@@ -29,6 +32,12 @@ class LinkEnumerator
           if a.rel >= b.rel then 1 else -1
 
         LinkEnumerator.addLink root, linkTag for linkTag in linkTags
+
+        $('#links a').click ->
+          console.log($(this)); 
+          chrome.tabs.create url: $(this).attr('href')
+          false
+
 
 document.addEventListener 'DOMContentLoaded', ->
   LinkEnumerator.addListOfLinks()          
