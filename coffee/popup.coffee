@@ -2,12 +2,16 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+$b = DOMBrew
+
 class LinkEnumerator
   @addLink: (root, linkTag) ->
-    li = root.appendChild document.createElement('li')
-    a = li.appendChild document.createElement('a')
-    a.href = linkTag.href
-    a.innerText = linkTag.href
+    $b(root).append($b('tr')
+      .append($b('td', linkTag.rel))
+      .append($b('td')
+        .append($b('a', href: linkTag.href, title: linkTag.href, text: linkTag.href )))
+      .append($b('td',  class: 'type', text: linkTag.type))
+      .append($b('td',  linkTag.media)))
 
   @addListOfLinks: ->
     chrome.tabs.getSelected null, (tab) ->
@@ -15,8 +19,7 @@ class LinkEnumerator
         root = document.getElementById 'links'
 
         unless linkTags?
-          li = root.appendChild(document.createElement('li'))
-          li.innerText = 'No link tags found.'
+          td = $b(root).append($b('tr').append($b('td', 'No link tags found.')))
           return
 
         LinkEnumerator.addLink root, linkTag for linkTag in linkTags

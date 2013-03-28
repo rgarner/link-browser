@@ -4,7 +4,7 @@
     <title>Link Browser Popup</title>
     <style>
       body {
-        min-width: 357px;
+        min-width: 450px;
         overflow-x: hidden;
         font-family: "Helvetica Neue", Verdana;
       }
@@ -22,7 +22,15 @@
       }
 
       #links {
-        font-size: 0.8em;
+        font-size: 0.8em;        
+      }
+
+      #links thead {
+        background-color: #EEE;
+      }
+
+      #links .type {
+        font-style: italic;
       }
     </style>
 
@@ -32,13 +40,21 @@
       -
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
      -->
+    <script src="../js/dombrew.js"></script>
     <script src="../js/popup.js"></script>
   </head>
   <body>
     <h1>&lt;link&gt; tags in this document</h1>
-    <ul id="links">
-
-    </ul>
+    <table id="links">
+      <thead id="links-head">
+        <tr>
+          <td>rel</td>
+          <td>href</td>
+          <td>type</td>
+          <td>media</td>
+        </tr> 
+      </thead>
+    </table>
   </body>
 </html>
 
