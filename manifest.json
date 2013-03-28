@@ -3,7 +3,7 @@
 
   "name": "Link tag browser",
   "description": "Shows <link> tags as a browseable dropdown",
-  "version": "1.0",
+  "version": "1.01",
   "icons": {
     "16": "img/icon-16.png",    
     "48": "img/icon-48.png",    
