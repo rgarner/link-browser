@@ -6,7 +6,7 @@ class LinkEnumerator
   @newTab: (href) ->
     chrome.tabs.create(url: href)
 
-  @addLink: (root, linkTag) ->
+  @addLink: (linkTag) ->
     _class = if linkTag.rel == 'alternate' then 'class="alternate"' else null
     $('#links').append("""
         <tr>
@@ -20,10 +20,15 @@ class LinkEnumerator
   @addListOfLinks: ->
     chrome.tabs.getSelected null, (tab) ->
       chrome.tabs.sendMessage tab.id, { askFor: 'links' }, (linkTags) ->
-        root = document.getElementById 'links'
-
         unless linkTags?
-          td = $b(root).append($b('tr').append($b('td', 'No link tags found.')))
+          $('#links').append('''
+            <tr>
+              <td colspan="4">
+                No <code>&lt;link&gt;</code> tags here.
+              </td>
+            </tr>
+            ''')
+          $('#links thead').remove()
           return
 
         linkTags.sort (a, b) ->
@@ -31,7 +36,7 @@ class LinkEnumerator
           return -1 if a.rel == 'alternate'
           if a.rel >= b.rel then 1 else -1
 
-        LinkEnumerator.addLink root, linkTag for linkTag in linkTags
+        LinkEnumerator.addLink linkTag for linkTag in linkTags
 
         $('#links a').click ->
           console.log($(this)); 

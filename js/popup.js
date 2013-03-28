@@ -12,7 +12,7 @@
       });
     };
 
-    LinkEnumerator.addLink = function(root, linkTag) {
+    LinkEnumerator.addLink = function(linkTag) {
       var _class;
       _class = linkTag.rel === 'alternate' ? 'class="alternate"' : null;
       return $('#links').append("<tr>\n  <td " + _class + ">" + linkTag.rel + "</td>\n  <td><a href=\"" + linkTag.href + "\" title=\"" + linkTag.title + "\">" + linkTag.href + "</a></td>\n  <td>" + linkTag.type + "</td>\n  <td>" + linkTag.media + "</td>\n</tr>");
@@ -23,10 +23,10 @@
         return chrome.tabs.sendMessage(tab.id, {
           askFor: 'links'
         }, function(linkTags) {
-          var linkTag, root, td, _i, _len;
-          root = document.getElementById('links');
+          var linkTag, _i, _len;
           if (linkTags == null) {
-            td = $b(root).append($b('tr').append($b('td', 'No link tags found.')));
+            $('#links').append('<tr>\n  <td colspan="4">\n    No <code>&lt;link&gt;</code> tags here.\n  </td>\n</tr>');
+            $('#links thead').remove();
             return;
           }
           linkTags.sort(function(a, b) {
@@ -44,7 +44,7 @@
           });
           for (_i = 0, _len = linkTags.length; _i < _len; _i++) {
             linkTag = linkTags[_i];
-            LinkEnumerator.addLink(root, linkTag);
+            LinkEnumerator.addLink(linkTag);
           }
           return $('#links a').click(function() {
             console.log($(this));
