@@ -10,14 +10,12 @@
   });
 
   getLinks = function() {
-    var linkJSON, linkTag, linkTags, _i, _len;
-    linkTags = document.getElementsByTagName('link');
-    linkJSON = {
-      'links': []
-    };
-    for (_i = 0, _len = linkTags.length; _i < _len; _i++) {
-      linkTag = linkTags[_i];
-      linkJSON.links.push({
+    var linkTag, _i, _len, _ref, _results;
+    _ref = document.getElementsByTagName('link');
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      linkTag = _ref[_i];
+      _results.push({
         rel: linkTag.rel,
         href: linkTag.href,
         title: linkTag.title,
@@ -25,7 +23,7 @@
         media: linkTag.media
       });
     }
-    return linkJSON;
+    return _results;
   };
 
 }).call(this);

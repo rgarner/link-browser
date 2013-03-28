@@ -8,7 +8,6 @@
 
     LinkEnumerator.addLink = function(root, linkTag) {
       var a, li;
-      console.log('adding link');
       li = root.appendChild(document.createElement('li'));
       a = li.appendChild(document.createElement('a'));
       a.href = linkTag.href;
@@ -19,9 +18,8 @@
       return chrome.tabs.getSelected(null, function(tab) {
         return chrome.tabs.sendMessage(tab.id, {
           askFor: 'links'
-        }, function(response) {
-          var li, linkTag, linkTags, root, _i, _len, _results;
-          linkTags = response.links;
+        }, function(linkTags) {
+          var li, linkTag, root, _i, _len, _results;
           root = document.getElementById('links');
           if (linkTags == null) {
             li = root.appendChild(document.createElement('li'));

@@ -4,7 +4,6 @@
 
 class LinkEnumerator
   @addLink: (root, linkTag) ->
-    console.log 'adding link'
     li = root.appendChild document.createElement('li')
     a = li.appendChild document.createElement('a')
     a.href = linkTag.href
@@ -12,8 +11,7 @@ class LinkEnumerator
 
   @addListOfLinks: ->
     chrome.tabs.getSelected null, (tab) ->
-      chrome.tabs.sendMessage tab.id, { askFor: 'links' }, (response) ->
-        linkTags = response.links
+      chrome.tabs.sendMessage tab.id, { askFor: 'links' }, (linkTags) ->
         root = document.getElementById 'links'
 
         unless linkTags?
