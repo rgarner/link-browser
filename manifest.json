@@ -4,13 +4,18 @@
   "name": "Link tag browser",
   "description": "Shows <link> tags as a browseable dropdown",
   "version": "1.0",
+  "icons": {
+    "16": "icon-16.png",    
+    "48": "icon-48.png",    
+    "128": "icon-128.png"    
+  },
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": ["http://*/*", "https://*/*"],
       "js": ["link-reader.js"]
     }
   ]

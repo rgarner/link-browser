@@ -6,7 +6,6 @@ chrome.extension.onMessage.addListener(
     	return;
 
     sendResponse(getLinks());
-    console.log('link-reader listener done');
   }
 );
 
@@ -15,11 +14,14 @@ function getLinks() {
 	var linkJSON = { 'links': [] };
 
 	for (var i = 0; i < linkTags.length; i++) {
-		var linkTag = linkTags[i]
+		var linkTag = linkTags[i];
+    
 		linkJSON.links.push({ 
       rel: linkTag.rel, 
       href: linkTag.href, 
-      type: linkTag.type 
+      title: linkTag.title,
+      type: linkTag.type,
+      media: linkTag.media
     });
 	};
 
